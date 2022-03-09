@@ -1,0 +1,227 @@
+<html lang="ru">
+
+<head>
+    <meta charSet="utf-8"/>
+    <title>Photobooth</title>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+
+</head>
+
+<body>
+
+<a-scene cursor="rayOrigin: mouse" raycaster="objects: [data-clickable]">
+
+    <a-assets>
+        <img id="one"
+             src="/static/mask1.png"/>
+        <img id="two"
+             src="/static/mask2.png"/>
+
+    </a-assets>
+
+    <a-entity zappar-permissions-ui id="permissions">
+        <a-entity text="value: Please reload the page, accepting the camera permissions." position="0 0 -2">
+        </a-entity>
+    </a-entity>
+    <a-entity camera zappar-camera="user-facing: true;"></a-entity>
+
+    <a-entity zappar-face id="facemesh1">
+        <a-entity geometry="primitive: face-mesh; face: #facemesh1" id="mainEntity"
+                  material="src:#one; transparent: true;"></a-entity>
+    </a-entity>
+
+
+    <!--Отображение управляющих элементов: вперед и назад-->
+    <a-entity geometry="primitive: plane" material="src: #next; transparent: true;" position="0.5 -1.5 0"
+              scale="0.5 0.5 0.5" data-clickable onclick="OnNextClick()"></a-entity>
+    <a-entity geometry="primitive: plane" material="src: #prev; transparent: true;" position="0.5 -1.5 0"
+              scale="0.5 0.5 0.5" data-clickable onclick="OnPrevClick()"></a-entity>
+
+</a-scene>
+
+
+<button
+        id="first"
+        onclick="OnPrevClick()"
+        style="
+        width: 150px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-style: solid;
+        border-color: black;
+        position: absolute;
+        left: 20%;
+        top: 80%;
+      "
+>
+    <p
+            id="help1"
+            style="
+          font-size: 18px;
+          line-height: 100%;
+          text-align: center;
+          color: black;
+        "
+    >
+        Предыдущая
+    </p>
+</button>
+
+<button
+        onclick="MakeScreenshot()"
+        style="
+        width: 90px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-style: solid;
+        border-color: black;
+        position: absolute;
+        left:48%;
+        top: 80%;
+      "
+>
+    <p
+            style="
+          font-size: 18px;
+          line-height: 100%;
+          text-align: center;
+          color: black;
+        "
+    >
+        Фото
+    </p>
+</button>
+
+<button
+        onclick="OnNextClick()"
+        style="
+        width: 150px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: black;
+        position: absolute;
+        left: 70%;
+        top: 80%;
+      "
+>
+    <p
+            style="
+          font-size: 18px;
+          line-height: 100%;
+          text-align: center;
+          color: black;
+        "
+    >
+        следующая
+    </p>
+</button>
+
+<button
+        onclick="Game()"
+        style="
+        width: 150px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: black;
+        position: absolute;
+        left: 81%;
+        top: 80%;
+      "
+>
+
+        <center>
+    <nav class="menu menu--adsila">
+
+        <a class="menu__item" href="/game">
+            <span class="menu__item-name">Игра</span>
+        </a>
+
+
+    </nav>
+</center>
+
+</button>
+
+<script src="html2canvas.js"></script>
+
+
+<script>
+
+
+    var mainEntity = document.getElementById("mainEntity");
+    var score = 0;
+    var pipe = []
+    var p = 20
+    var c = 0;
+    var game = 0
+    var d = document;
+    var img = ["src:#one", "src:#two"]
+
+
+
+
+
+
+
+    /*********** Code for face tracking *********/
+    function OnNextClick() {
+        c++;
+        console.log(c)
+
+
+        if (c > 1) c = 0
+
+
+        mainEntity.removeAttribute("material")
+        mainEntity.setAttribute("material", img[c] + "; transparent: true;")
+
+    }
+    function OnPrevClick() {
+        c--;
+        if (c < 0) c = 1
+        overlay.removeAttribute("material")
+        overlay.setAttribute("material", img[c] + "; transparent: true;")
+    }
+    function saveBase64AsFile(base64, fileName) {
+        var link = document.createElement("a");
+
+        document.body.appendChild(link); // for Firefox
+
+        link.setAttribute("href", base64);
+        link.setAttribute("download", fileName);
+        link.click();
+    }
+    function MakeScreenshot() {
+        // const screenshotTarget = document.body;
+
+        // html2canvas(screenshotTarget).then((canvas) => {
+        //     const base64image = canvas.toDataURL("image/png");
+        //     var currentdate = new Date();
+        //     var datetime = "Last Sync: " + currentdate.getDate() + "/"
+        //         + (currentdate.getMonth()+1)  + "/"
+        //         + currentdate.getFullYear() + " @ "
+        //         + currentdate.getHours() + ":"
+        //         + currentdate.getMinutes() + ":"
+        //         + currentdate.getSeconds();
+        //     saveBase64AsFile(base64image, datetime)
+        // });
+
+        document.querySelector('a-scene').components.screenshot.capture('perspective')}
+
+
+
+</script>
+
+</body>
+
+</html>
