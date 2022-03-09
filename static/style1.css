@@ -11,9 +11,9 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-  -o-transform : scaleX(-1);
-  -webkit-transform : scaleX(-1);
-  transform : scaleX(-1);
+  -o-transform : scaleX(1);
+  -webkit-transform : scaleX(1);
+  transform : scaleX(1);
   -ms-filter : fliph; /*IE*/
   filter : fliph; /*IE*/
 }
@@ -24,6 +24,16 @@ body {
   transform : scaleX(-1);
   -ms-filter : fliph; /*IE*/
   filter : fliph; /*IE*/
+}
+#FlyBird {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  -ms-filter: fliph();
+  filter: fliph;
 }
 
 #container {
